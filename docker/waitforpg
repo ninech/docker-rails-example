@@ -1,0 +1,18 @@
+#!/bin/sh
+# Usage: waitforpg
+# expected ENV: POSTGRES_HOST, POSTGRES_PORT, POSTGRES_DB, POSTGRES_USER, POSTGRES_PASSWORD
+# Description:
+# Waits for postgres to be fully up and running
+
+export PGPASSWORD=${POSTGRES_PASSWORD-postgres}
+
+probe() {
+  echo "select 'ping';" | psql -h "${POSTGRES_HOST-postgres}" -p "${POSTGRES_PORT-5432}" -U "${POSTGRES_USER-postgres}" "${POSTGRES_DB-postgres}" 2>/dev/null >/dev/null
+  return $?
+}
+
+until probe; do
+    echo "⏳ $(date) - waiting for ${POSTGRES_HOST-postgres}..."
+    sleep 1
+done
+unset PGPASSWORD

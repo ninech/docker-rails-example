@@ -1,24 +1,38 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+An example on how to leverage Docker for Ruby (on Rails) development.
 
-Things you may want to cover:
+## Development
 
-* Ruby version
+    docker-compose build --pull
+    docker-compose up app
 
-* System dependencies
+`docker-compose ps` will tell you, on which local port the application binds.
 
-* Configuration
+## Launch tests
 
-* Database creation
+    docker-compose build --pull
+    docker-compose -f docker-compose.test.yml run --rm app
 
-* Database initialization
+## Prepare for airplane mode
 
-* How to run the test suite
+    docker-compose pull
 
-* Services (job queues, cache servers, search engines, etc.)
+## Troubleshooting
 
-* Deployment instructions
+Have you tried to turn it off an on again?
 
-* ...
+    # Turn off
+    docker-compose kill
+    docker-compose rm -fv
+
+    # Turn on
+    docker-compose up app
+
+Check the logs:
+
+    docker-compose logs
+
+You can enter a running container:
+
+    docker-compose exec app /bin/sh

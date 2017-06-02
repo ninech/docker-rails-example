@@ -1,0 +1,6 @@
+#!/bin/sh
+
+bin/rails db:setup RAILS_ENV=test
+
+# Prevent zombies
+exec $@

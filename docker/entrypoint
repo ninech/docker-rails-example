@@ -1,0 +1,7 @@
+#!/bin/sh
+
+waitforpg
+setup_pg postgres
+
+# Prevent zombies
+exec $@
