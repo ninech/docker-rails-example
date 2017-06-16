@@ -4,7 +4,13 @@ services:
     build: .
     image: docker-registry.internal/ninech/docker-example
     volumes:
-      - .:/app
+      - ./app:/app/app
+      - ./bin:/app/bin
+      - ./config:/app/config
+      - ./db:/app/db
+      - ./lib:/app/lib
+      - ./public:/app/public
+      - ./test:/app/test
     ports:
       - 3000
     depends_on:
