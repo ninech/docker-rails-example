@@ -15,9 +15,14 @@ services:
       - 3000
     depends_on:
       - postgres
+      - zipkin
     environment:
       - POSTGRES_PASSWORD=frankenstein
   postgres:
     image: postgres:9.5-alpine
     environment:
       - POSTGRES_PASSWORD
+  zipkin:
+    image: openzipkin/zipkin:1.26
+    ports:
+      - 9411

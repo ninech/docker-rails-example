@@ -1,3 +1,6 @@
+require 'faraday'
+require 'zipkin-tracer'
+
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
@@ -5,6 +8,13 @@ class PostsController < ApplicationController
   # GET /posts.json
   def index
     @posts = Post.all
+    conn = Faraday.new(:url => 'http://www.nine.ch/') do |faraday|
+      faraday.use ZipkinTracer::FaradayHandler, 'ninech-website' # 'service_name' is optional (but recommended)
+      # default Faraday stack
+      faraday.request :url_encoded
+      faraday.adapter Faraday.default_adapter
+    end
+    conn.get('/')
   end
 
   # GET /posts/1
